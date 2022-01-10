@@ -2,20 +2,20 @@ import axios from 'axios';
 
 axios.defaults.baseURL = ''
 
-
-async function getRequestHeaders() {
+const getRequestHeaders = async () => {
     try {
+      let token = localStorage.getItem('token');
       return {
-        Authorization: 'Bearer ' + ''
+        Authorization: 'Bearer ' + token
       };
     } catch (error) {
       return {};
     }
 }
 
-export async function apiRestGet(path: string, body = {}): Promise<any> {
+export const  apiRestGet = async (path, body = {}) => {
     try {
-      const requestOptions: any = {};
+      const requestOptions = {};
       requestOptions.headers = await getRequestHeaders();
       requestOptions.params = body;
       const response = await axios.get(path, requestOptions);
@@ -25,9 +25,9 @@ export async function apiRestGet(path: string, body = {}): Promise<any> {
     }
 }
 
-export async function apiRestPost(path: string, body: any = {}): Promise<any> {
+export const apiRestPost = async(path, body = {}) =>  {
     try {
-      const requestOptions: any = {};
+      const requestOptions = {};
       requestOptions.headers = await getRequestHeaders();
       const response = await axios.post(path, body, requestOptions);
       return response.data;
@@ -36,18 +36,18 @@ export async function apiRestPost(path: string, body: any = {}): Promise<any> {
     }
 }
 
-export async function apiRestPatch(path: string, body: any): Promise<any> {
+export async function apiRestPut(path, body) {
     try {
-      const requestOptions: any = {};
+      const requestOptions = {};
       requestOptions.headers = await getRequestHeaders();
-      const response = await axios.patch(path, body, requestOptions);
+      const response = await axios.put(path, body, requestOptions);
       return response.data;
     } catch (error) {
       return { error: error };
     }
 }
 
-export async function apiRestDelete(path: string, body: any): Promise<any> {
+export async function apiRestDelete(path, body) {
     try {
       const requestHeaders = await getRequestHeaders();
   
