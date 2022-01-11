@@ -44,6 +44,7 @@ const Biblioteca = () => {
             let token = await localStorage.getItem('token')
             if(token != null){
                 router.push('/biblioteca/create');
+                return;
             }
             router.push('/login');
         }
