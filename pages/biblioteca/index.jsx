@@ -23,21 +23,31 @@ const Biblioteca = () => {
 
         const modifyLibrary = async (id) => {
             setModify(true);
-            if(modify){
-                router.push('/biblioteca/create?id='+id);
+            let token = await localStorage.getItem('token')
+            if(token != null){
+                if(modify){
+                    router.push('/biblioteca/create?id='+id);
+                }
+                return;
             }
+            router.push('/login');
         }
 
         const deleteLibrary = async (id) => {
             setDeletee(true);
-            if(deletee){
-                const deleteResult = await apiRestDelete(process.env.NEXT_PUBLIC_BACKEND_URL+'library/'+id);
-                if(!deleteResult.error){
-                    let libraries = await getLibraries();
-                    return;
+            let token = await localStorage.getItem('token')
+            if(token != null){
+                if(deletee){
+                    const deleteResult = await apiRestDelete(process.env.NEXT_PUBLIC_BACKEND_URL+'library/'+id);
+                    if(!deleteResult.error){
+                        let libraries = await getLibraries();
+                        return;
+                    }
+                    console.log(!deleteResult.error)
                 }
-                console.log(!deleteResult.error)
+                return;
             }
+            router.push('/login');
         }
 
         const createLibary = async () => {
